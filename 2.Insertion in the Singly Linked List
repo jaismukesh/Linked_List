@@ -1,0 +1,117 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+  int data;
+  Node*next;
+
+  Node(){
+		this->data=0;
+		this->next=NULL;
+	}
+Node(int data){
+	this->data=data;
+	this->next=NULL;
+}
+};
+void print(Node *head){
+	Node *temp=head;
+	while(temp!=NULL){
+		cout<<temp->data<<" ";
+		temp=temp->next;
+	}
+}
+//insert the Node in the begining of the Linked List
+void InsertAtBegining(Node *&head,Node * &tail,int data){
+	//check Linked List empty or not 
+	if(head==NULL){
+		Node*newNode=new Node(data);
+		head=newNode;
+		tail=newNode;
+		return;
+	}
+  // RUn if the Linked list is not empty
+	Node *newNode=new Node(data);
+	newNode->next=head;
+	head=newNode;
+}
+
+//funtion for inserting node in the end of the linked list.
+void InsertAtEnd(Node *&head,Node * &tail,int data){
+	//check Linked List empty or not 
+	if(head==NULL){
+		Node*newNode=new Node(data);
+		head=newNode;
+		tail=newNode;
+		return;
+	}
+
+	Node*newNode=new Node(data);
+	tail->next=newNode;
+	newNode=tail;
+}
+
+void InsertAtPosition(Node *&head,Node * &tail,int data,int position,int len){
+	if(position==0){
+		InsertAtBegining(head,tail,data);
+	}
+
+	if(position==len){
+		InsertAtEnd(head,tail,data);
+	}
+  Node *pre=head;
+	int i=1;
+	while(i<position){
+		pre=pre->next;
+		i++;
+	}
+	Node *curr=pre->next;
+	Node *newNode=new Node(data);
+	newNode->next=curr;
+	pre->next=newNode;
+}
+
+int FindLength(Node *&head,Node * &tail){
+	int len=0;
+   Node *temp=new Node();
+	while(temp != NULL){
+		len++;
+		temp=temp->next;
+	}
+	return len;
+}
+int main() {
+  Node *head=NULL;
+	Node *tail=NULL;
+  //function call for insereting the Node in the begining of the linked list.
+	InsertAtBegining(head,tail,40);
+	InsertAtBegining(head,tail,30);
+	InsertAtBegining(head,tail,20);
+	InsertAtBegining(head,tail,10);
+	cout<<"After Insertion in the Begining of the LL:"<<endl;
+	print(head);
+  cout<<endl;
+	InsertAtEnd(head,tail,50);
+	cout<<"After Insertion in the end of the LL :"<<endl;
+  print(head);
+  cout<<endl;
+
+  int len=FindLength(head,tail);
+	InsertAtPosition(head,tail,101,4,len);
+
+	cout<<"After Insertion At the Specific Position of the LL :"<<endl;
+	print(head);
+  cout<<endl;
+	
+}
+
+
+_____________________________________________________________________________________________________________________________
+
+After Insertion in the Begining of the LL:
+10 20 30 40 
+After Insertion in the end of the LL :
+10 20 30 40 50 
+After Insertion At the Specific Position of the LL :
+10 20 30 40 101 50 
