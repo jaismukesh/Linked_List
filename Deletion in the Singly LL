@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+  int data;
+  Node*next;
+
+  Node(){
+		this->data=0;
+		this->next=NULL;
+	}
+Node(int data){
+	this->data=data;
+	this->next=NULL;
+}
+};
+void print(Node *head){
+	Node *temp=head;
+	while(temp!=NULL){
+		cout<<temp->data<<" ";
+		temp=temp->next;
+	}
+}
+//funtion to delete the node from the begining 
+void DeletionFromBeginning(Node * &head){
+	if(head==NULL){
+		cout<<"given LL is empty"<<endl;
+		return;
+	}
+
+	Node *temp=head;
+	head=head->next;
+	temp->next=NULL;
+	delete temp;
+	
+} 
+
+//funtion to delete the node from the end of the LL
+
+ void DeletionFromEnd(Node * &head){
+  if(head==NULL){
+	cout<<"Given LL is empty"<<endl;
+  }
+
+	Node *pre=head;
+	 while(pre->next->next != NULL){
+		 pre=pre->next;
+	 }
+
+	 Node*curr=pre->next;
+
+	 pre->next=NULL;
+	 delete curr;
+}
+
+void DeletionfromMiddle(Node* &head ,int pos){
+	if(head==NULL){
+		cout<<"Given LL is empty"<<endl;
+		return;
+	}
+Node *pre=head;
+	int i=0;
+	while(i<pos-1){
+		i++;
+		pre=pre->next;
+	}
+	Node *curr=pre->next;
+	Node*temp=curr->next;
+	pre->next=temp;
+	curr->next=NULL;
+	delete curr;
+}
+int main() {
+	
+  Node*head=new Node(10);
+	Node*second=new Node(20);
+	Node*third=new Node(30);
+	Node*forth=new Node(40);
+	Node*fifth=new Node(50);
+	Node*sixth=new Node(60);
+
+	head->next=second;
+	second->next=third;
+	third->next=forth;
+	forth->next=fifth;
+	fifth->next=sixth;
+
+	cout<<"Printing the original linked list :->"<<endl;
+	print(head);
+	cout<<endl;
+
+	DeletionFromBeginning(head);
+	cout<<"Printing the LL after the Deletion from the begining :->"<<endl;
+print(head);
+	cout<<endl;
+
+	DeletionFromEnd(head);
+cout<<"Printing the LL after the Deletion from the End :->"<<endl;
+print(head);
+	cout<<endl;
+
+
+DeletionfromMiddle(head,2);
+	
+cout<<"Printing the LL after the Deletion from the Middle :->"<<endl;
+print(head);
+	cout<<endl;
+}
+
+
+_________________________________________________________________________________________________________________________________
+OUTPUT--
+
+Printing the original linked list :->
+10 20 30 40 50 60 
+
+Printing the LL after the Deletion from the begining :->
+20 30 40 50 60 
+
+Printing the LL after the Deletion from the End :->
+20 30 40 50 
+
+Printing the LL after the Deletion from the Middle :->
+20 30 50
