@@ -1,0 +1,174 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+  public:
+    int data;
+    Node*next;
+    Node*pre;
+
+   Node(){
+		 this->data=0;
+		 this->next=NULL;
+		 this->pre=NULL;
+	 }
+
+   Node(int data){
+		 this->data=data;
+		 this->next=NULL;
+		 this->pre=NULL;
+	 }
+};
+
+//funtion to print the LL
+
+void print(Node* &head){
+	Node *temp=head;
+	while(temp!=NULL){
+		cout<<temp->data<<" ";
+		temp=temp->next;
+	}
+}
+
+int getlength(Node * &head){
+	Node *temp=head;
+	int len=0;
+	while(temp!=NULL){
+		len++;
+		temp=temp->next;
+	}
+	return len;
+}
+
+//function to insert the data at the begining of the LL
+void InsertionAtBegining(Node* &head,int data){
+
+	//if given ll is empty
+	if(head==NULL){
+		Node*newNode=new Node(data);
+		return;
+	}
+
+	//if given LL is not empty
+	Node*newNode=new Node(data);
+	newNode->next=head;
+	head->pre=newNode;
+	head=newNode;
+}
+
+//funtion to insert the node at the end of the LL
+void InsertionAtEnd(Node* &head,int data){
+	//if given ll is empty
+	if(head==NULL){
+		Node*newNode=new Node(data);
+		return;
+	}
+
+	//if given LL is not empty
+	Node*temp=head;
+	while(temp->next!=NULL){
+		temp=temp->next;
+	}
+	Node*newNode=new Node(data);
+	temp->next=newNode;
+	newNode->pre=temp;
+}
+
+//funtion to insert node at the specific [position]
+void InsertionAtMiddle(Node* &head,int data, int pos){
+	//if the ll is already empty
+	if(head==NULL){
+		Node *newNode=new Node(data);
+		return;
+	}
+ // we gave the pos =0
+	if(pos==0){
+		InsertionAtBegining(head,data);
+		return;
+	}
+
+	int len=getlength(head);
+	if(pos>len){
+		InsertionAtEnd(head,data);
+		return;
+	}
+
+	Node*preNode=head;
+	int i=1;
+	while(i<pos-1){
+		preNode=preNode->next;
+		i++;
+	}
+	Node*curr=preNode->next;
+
+	Node*newNode=new Node(data);
+	newNode->next=curr;
+	curr->pre=newNode;
+	preNode->next=newNode;
+	newNode->pre=preNode;
+	
+}
+int main() {
+  Node*first=new Node(10);
+	Node*second=new Node(20);
+	Node*third=new Node(30);
+	Node*forth=new Node(40);
+	Node*fifth=new Node(50);
+	Node*sixth=new Node(60);
+
+	Node *head=first;
+	
+
+	first->next=second;
+	second->pre=first;
+	
+  second->next=third;
+	third->pre=second;
+	
+	third->next=forth;
+	forth->pre=third;
+
+	forth->next=fifth;
+	fifth->pre=forth;
+	
+	fifth->next=sixth;
+	sixth->pre=fifth;
+
+	cout<<endl;
+	cout<<"printing the original LL :"<<endl;
+	print(head);
+	cout<<endl;
+
+	InsertionAtBegining(head,101);
+	cout<<endl;
+	cout<<"printing the LL After Insertion At the Begining :"<<endl;
+	print(head);
+	cout<<endl;
+
+	InsertionAtEnd(head,201);
+	cout<<endl;
+	cout<<"printing the LL After Insertion At the End:"<<endl;
+	print(head);
+	cout<<endl;
+
+	InsertionAtMiddle(head,501,3);
+	cout<<endl;
+	cout<<"printing the LL After Insertion At the Middle:"<<endl;
+	print(head);
+	cout<<endl;
+}
+
+_____________________________________________________________________________________________________________________________________________
+
+OUTPUT--
+printing the original LL :
+10 20 30 40 50 60 
+
+printing the LL After Insertion At the Begining :
+101 10 20 30 40 50 60 
+
+printing the LL After Insertion At the End:
+101 10 20 30 40 50 60 201 
+
+printing the LL After Insertion At the Middle:
+101 10 501 20 30 40 50 60 201
